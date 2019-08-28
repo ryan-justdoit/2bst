@@ -9,5 +9,5 @@ avl:avl.c drawtree.c queue.c travel.c
 	$(CC) $^ -o $@ $(CPPFLAGS) -DAVL
 
 clean:
-	$(RM) bst avl *.html
+	$(RM) bst avl *.html .*.swp
 

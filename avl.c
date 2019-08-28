@@ -40,6 +40,11 @@ treenode *avl_revolve_left_right(treenode *root)
 	return avl_revolve_right(root);
 }
 
+treenode *avl_revolve_right_left(treenode *root)
+{
+	root->rchild = avl_revolve_right(root->rchild);
+	return avl_revolve_left(root);
+}
 
 void avl_insert2(treenode **proot,treenode *new)
 {
@@ -53,18 +58,31 @@ void avl_insert2(treenode **proot,treenode *new)
 		avl_insert2(&(*proot)->lchild,new);
 	else
 		avl_insert2(&(*proot)->rchild,new);
-
+	//最大是2
 	if(height((*proot)->lchild) - height((*proot)->rchild) >1)
 	{
 		if(new->data < (*proot)->lchild->data)
 		{
-			printf("revolvint right ... \n");
+			printf("revolving right ... \n");
 			*proot = avl_revolve_right(*proot);
 		}
 		else
 		{
 			printf("revolving ...\n");
 			*proot = avl_revolve_left_right(*proot);
+		}
+	}
+	else if((height((*proot)->rchild) - height((*proot)->lchild)) > 1)
+	{
+		if(new->data > (*proot)->rchild->data)
+		{
+			printf("revolving left ... \n");
+			*proot = avl_revolve_left(*proot);
+		}
+		else
+		{
+			printf("revolving ... \n");
+			*proot = avl_revolve_right_left(*proot);
 		}
 	}
 	(*proot)->height = MAX(height((*proot)->lchild),height((*proot)->rchild))+1;
